@@ -14,6 +14,7 @@ export default {
   },
   argTypes: {
     onInput: { action: 'changed' },
+    icon: { type: '' },
   },
 } as Meta;
 

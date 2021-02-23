@@ -1,4 +1,7 @@
 import styled, { css, DefaultTheme } from 'styled-components';
+import { TextFieldProps } from '.';
+
+type IconPositionProps = Pick<TextFieldProps, 'iconPosition'>;
 
 export const InputWrapper = styled.div`
   ${({ theme }) => css`
@@ -16,16 +19,19 @@ export const InputWrapper = styled.div`
 
 type InputProps = {
   hasIcon?: boolean;
-};
+} & IconPositionProps;
 
 const inputModifiers = {
-  withIcon: (theme: DefaultTheme) => css`
-    padding: ${theme.spacings.xxsmall};
+  withIcon: (
+    theme: DefaultTheme,
+    iconPosition: IconPositionProps['iconPosition']
+  ) => css`
+    padding-${iconPosition!}: ${theme.spacings.xsmall};
   `,
 };
 
 export const Input = styled.input<InputProps>`
-  ${({ theme, hasIcon }) => css`
+  ${({ theme, hasIcon, iconPosition }) => css`
     color: ${theme.colors.black};
     font-family: ${theme.font.family};
     font-size: ${theme.font.sizes.medium};
@@ -35,7 +41,7 @@ export const Input = styled.input<InputProps>`
     outline: none;
     width: 100%;
 
-    ${hasIcon && inputModifiers.withIcon(theme)};
+    ${hasIcon && inputModifiers.withIcon(theme, iconPosition!)};
   `}
 `;
 
@@ -47,11 +53,12 @@ export const Label = styled.label`
   `}
 `;
 
-export const Icon = styled.div`
-  ${({ theme }) => css`
+export const Icon = styled.div<IconPositionProps>`
+  ${({ theme, iconPosition }) => css`
     display: flex;
     width: 2.2.rem;
     color: ${theme.colors.gray};
+    order: ${iconPosition === 'right' ? 1 : 0};
 
     & > svg {
       width: 2rem;
