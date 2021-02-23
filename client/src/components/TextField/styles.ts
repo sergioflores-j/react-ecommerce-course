@@ -2,6 +2,10 @@ import styled, { css, DefaultTheme } from 'styled-components';
 import { TextFieldProps } from '.';
 
 type IconPositionProps = Pick<TextFieldProps, 'iconPosition'>;
+type WrapperProps = Pick<TextFieldProps, 'disabled'> & { error?: boolean };
+type InputProps = {
+  hasIcon?: boolean;
+} & IconPositionProps;
 
 export const InputWrapper = styled.div`
   ${({ theme }) => css`
@@ -11,15 +15,12 @@ export const InputWrapper = styled.div`
     padding: 0 ${theme.spacings.xsmall};
     border: 0.2rem solid;
     border-color: ${theme.colors.lightGray};
+
     &:focus-within {
       box-shadow: 0 0 0.5rem ${theme.colors.primary};
     }
   `}
 `;
-
-type InputProps = {
-  hasIcon?: boolean;
-} & IconPositionProps;
 
 const inputModifiers = {
   withIcon: (
@@ -39,7 +40,7 @@ export const Input = styled.input<InputProps>`
     background: transparent;
     border: 0;
     outline: none;
-    width: 100%;
+    width: ${iconPosition === 'right' ? `calc(100% - 2.2rem)` : `100%`};
 
     ${hasIcon && inputModifiers.withIcon(theme, iconPosition!)};
   `}
@@ -62,8 +63,45 @@ export const Icon = styled.div<IconPositionProps>`
 
     & > svg {
       width: 2rem;
+      height: 100%;
     }
   `}
 `;
 
-export const Wrapper = styled.div``;
+export const Error = styled.p`
+  ${({ theme }) => css`
+    color: ${theme.colors.red};
+    font-size: ${theme.font.sizes.xsmall};
+  `}
+`;
+
+const wrapperModifiers = {
+  error: (theme: DefaultTheme) => css`
+    ${InputWrapper} {
+      border-color: ${theme.colors.red};
+    }
+    ${Icon},
+    ${Label} {
+      color: ${theme.colors.red};
+    }
+  `,
+  disabled: (theme: DefaultTheme) => css`
+    ${Label},
+    ${Input},
+    ${Icon} {
+      cursor: not-allowed;
+      color: ${theme.colors.gray};
+
+      &::placeholder {
+        color: currentColor;
+      }
+    }
+  `,
+};
+
+export const Wrapper = styled.div<WrapperProps>`
+  ${({ theme, disabled, error }) => css`
+    ${error && wrapperModifiers.error(theme)}
+    ${disabled && wrapperModifiers.disabled(theme)}
+  `}
+`;
