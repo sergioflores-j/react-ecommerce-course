@@ -20,37 +20,41 @@ const props = {
   freeGamesHighlight: highlightMock,
 };
 
+jest.mock('components/Menu', () => ({
+  __esModule: true,
+  default: function Mock() {
+    return <div data-testid="Mock Menu" />;
+  },
+}));
+
+jest.mock('components/Footer', () => ({
+  __esModule: true,
+  default: function Mock() {
+    return <div data-testid="Mock Footer" />;
+  },
+}));
+
+jest.mock('components/Showcase', () => ({
+  __esModule: true,
+  default: function Mock() {
+    return <div data-testid="Mock Showcase" />;
+  },
+}));
+
+jest.mock('components/BannerSlider', () => ({
+  __esModule: true,
+  default: function Mock() {
+    return <div data-testid="Mock Banner Slider" />;
+  },
+}));
+
 describe('<Home />', () => {
   it('should render menu and footer', () => {
     renderWithTheme(<Home {...props} />);
 
-    // Header
-    expect(screen.getByLabelText(/open menu/i)).toBeInTheDocument();
-
-    // Footer
-    expect(
-      screen.getByRole('heading', { name: /follow us/i })
-    ).toBeInTheDocument();
-
-    expect(screen.getAllByRole('img', { name: /won games/i })).toHaveLength(2);
-
-    // Sections
-    expect(screen.getByRole('heading', { name: /News/i })).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { name: /Most Popular/i })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { name: /Upcoming/i })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { name: /Free Games/i })
-    ).toBeInTheDocument();
-
-    // banner
-    expect(screen.getAllByText(/defy death 1/i)).toHaveLength(1);
-    // card game
-    expect(screen.getAllByText(/population zero/i)).toHaveLength(5);
-    // highlight
-    expect(screen.getAllByText(/read dead is back!/i)).toHaveLength(3);
+    expect(screen.getByTestId('Mock Menu')).toBeInTheDocument();
+    expect(screen.getByTestId('Mock Banner Slider')).toBeInTheDocument();
+    expect(screen.getAllByTestId('Mock Showcase')).toHaveLength(5);
+    expect(screen.getByTestId('Mock Footer')).toBeInTheDocument();
   });
 });
