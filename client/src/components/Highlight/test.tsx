@@ -7,7 +7,7 @@ import Highlight from '.';
 const props = {
   title: 'Heading 1',
   subtitle: 'Heading 2',
-  backgroundImage: '/img/red-dead-img.jpg',
+  backgroundImage: '/img/games/red-dead-img.jpg',
   buttonLabel: 'Buy now',
   buttonLink: '/rdr2',
 };
