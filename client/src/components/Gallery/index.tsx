@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ArrowBackIos as ArrowLeft } from '@styled-icons/material-outlined/ArrowBackIos';
 import { ArrowForwardIos as ArrowRight } from '@styled-icons/material-outlined/ArrowForwardIos';
+import { Close } from '@styled-icons/material-outlined/Close';
 import SlickSlider from 'react-slick';
 
 import Slider, { SliderSettings } from 'components/Slider';
 
 import * as S from './styles';
-import { Close } from '@styled-icons/material-outlined';
 
 const commonSettings: SliderSettings = {
-  arrows: true,
   infinite: false,
   lazyLoad: 'ondemand',
+  arrows: true,
   nextArrow: <ArrowRight aria-label="next image" />,
   prevArrow: <ArrowLeft aria-label="previous image" />,
 };
@@ -70,13 +70,8 @@ const Gallery = ({ items }: GalleryProps) => {
       key === 'Escape' && setIsOpen(false);
     };
 
-    // onMount
     window.addEventListener('keyup', handleKeyUp);
-
-    // onDestroy
-    return () => {
-      window.removeEventListener('keyup', handleKeyUp);
-    };
+    return () => window.removeEventListener('keyup', handleKeyUp);
   }, []);
 
   return (
