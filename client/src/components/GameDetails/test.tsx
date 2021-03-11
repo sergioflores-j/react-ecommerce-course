@@ -5,6 +5,7 @@ import GameDetails, { GameDetailsProps } from '.';
 
 const props: GameDetailsProps = {
   developer: 'Different Tales',
+  publisher: 'Walkabout',
   platforms: ['windows', 'mac', 'linux'],
   releaseDate: '2020-11-21T23:00:00',
   rating: 'BR0',
@@ -48,6 +49,18 @@ describe('<GameDetails />', () => {
     expect(screen.getByRole('img', { name: /mac/i })).toBeInTheDocument();
   });
 
+  it('should render the developer', () => {
+    renderWithTheme(<GameDetails {...props} />);
+
+    expect(screen.getByText(/Different Tales/i)).toBeInTheDocument();
+  });
+
+  it('should render the publisher', () => {
+    renderWithTheme(<GameDetails {...props} />);
+
+    expect(screen.getByText(/Walkabout/i)).toBeInTheDocument();
+  });
+
   it('should render free rating when BR0', () => {
     renderWithTheme(<GameDetails {...props} />);
 
@@ -60,7 +73,7 @@ describe('<GameDetails />', () => {
     expect(screen.getByText(/18\+/i)).toBeInTheDocument();
   });
 
-  it('should render the formated date', () => {
+  it('should render the formatted date', () => {
     renderWithTheme(<GameDetails {...props} />);
 
     expect(screen.getByText('Nov 21, 2020')).toBeInTheDocument();
