@@ -64,7 +64,7 @@ exports[`<Empty /> should render correctly 1`] = `
 
 <body>
   <div>
-    <main
+    <div
       class="c0"
     >
       <img
@@ -91,7 +91,7 @@ exports[`<Empty /> should render correctly 1`] = `
           Go back to store
         </span>
       </a>
-    </main>
+    </div>
   </div>
 </body>
 `;
